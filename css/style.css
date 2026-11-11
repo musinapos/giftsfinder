@@ -1,22 +1,20 @@
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#FFF3D6;min-height:100vh;display:flex;justify-content:center}
-.box{width:100%;max-width:520px;padding:20px;text-align:center}
-h1{font-size:32px;margin:10px 0;color:#5B2C8A}
-h2{font-size:24px;color:#333}
-p{font-size:18px;line-height:1.5;color:#444}
-button{width:100%;padding:16px;margin:8px 0;font-size:19px;border:none;border-radius:16px;background:#fff;box-shadow:0 4px 0 #ddd;cursor:pointer;text-align:left}
-button:active{transform:translateY(3px);box-shadow:none}
-.big{font-size:22px;font-weight:bold;background:#7C3AED;color:#fff;text-align:center;box-shadow:0 4px 0 #4C1D95}
-.green{background:#059669;box-shadow:0 4px 0 #064E3B;color:#fff;text-align:center}
-.yellow{background:#FACC15;color:#333;text-align:center}
-input{width:100%;padding:16px;font-size:20px;border-radius:14px;border:3px solid #7C3AED;text-align:center;margin:10px 0}
-.bar{height:18px;background:#eee;border-radius:10px;overflow:hidden;margin:6px 0 14px}
-.fill{height:100%;background:#22C55E}
-.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 4px 0 #ddd;margin:10px 0;text-align:left}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#FFD93D 0%,#FF6B6B 45%,#6BCBFF 100%);min-height:100vh;padding:14px}
+.box{max-width:520px;margin:0 auto;background:#fff;border-radius:28px;padding:26px 20px 30px;box-shadow:0 12px 30px rgba(0,0,0,.30);border:5px solid #fff}
 .center{text-align:center}
-.emoji{font-size:38px;display:block;text-align:center}
-.small{font-size:15px;color:#666}
-a{color:#7C3AED;font-weight:bold}
-nav{margin:15px 0;font-size:16px}
-nav a{margin:0 8px;text-decoration:none}
-.board{font-size:34px;line-height:1.2;background:#fff;border-radius:14px;padding:12px;letter-spacing:4px}
+h1{font-size:44px;line-height:1.1;margin:8px 0;color:#5B2C8A}
+h2{font-size:30px;margin:12px 0;color:#222}
+p{font-size:21px;line-height:1.45;color:#333}
+.small{font-size:16px;color:#666}
+button{display:block;width:100%;padding:20px 14px;margin:13px 0;font-size:25px;font-weight:900;border:0;border-radius:20px;cursor:pointer;background:#6C5CE7;color:#fff;box-shadow:0 6px 0 #4834A8}
+button:active{transform:translateY(4px);box-shadow:none}
+.green{background:#00B894;box-shadow:0 6px 0 #00856A}
+.yellow{background:#FDCB6E;color:#222;box-shadow:0 6px 0 #D9A400}
+.red{background:#FF6B6B;box-shadow:0 6px 0 #CC4444}
+.big{font-size:28px;padding:24px}
+input,select{width:100%;padding:19px;font-size:23px;border:3px solid #6C5CE7;border-radius:16px;margin:10px 0;text-align:center;font-weight:bold}
+.card{background:#F1F2FF;border:3px dashed #6C5CE7;border-radius:22px;padding:20px;margin:18px 0}
+.emoji{font-size:110px;display:block;animation:bounce 1s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.board{font-size:34px;line-height:1.15;background:#2D3436;color:#fff;padding:18px 6px;border-radius:16px;overflow-x:auto;letter-spacing:2px}
+a{font-size:19px;color:#6C5CE7;font-weight:bold}
