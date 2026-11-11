@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Gift - Gift Finder</title><link rel="stylesheet" href="css/style.css"></head>
+<body><div class="box center">
+<h1 id="title">🎁 Your Gift!</h1>
+<div class="card center"><span class="emoji" id="emoji">🎁</span><h2 id="giftName"></h2><p id="giftText"></p></div>
+<p id="kidMsg"></p>
+<button class="green" onclick="shareWA()">📲 Share on WhatsApp</button>
+<button class="yellow" onclick="location.href='play.html?age=older'">🔁 Play Again</button>
+<button onclick="location.href='chess.html'">♟️ Try Chess Puzzles</button>
+<div class="card"><h2>👨‍👩‍👧 For Parents</h2><p id="parentText"></p><p><b>Next step:</b> Join a club / class near you. Search on Google: <span id="searchText"></span></p><p class="small">Free game by Gift Finder SA. Made for SA kids.</p></div>
+<p><a href="index.html">← Back Home</a></p>
+</div><script>
+const u=new URLSearchParams(location.search);const name=u.get("name")||"Superstar";const gift=u.get("gift")||"art";
+const G={art:{e:"🎨",n:"ART & CREATIVITY!",t:"You love to MAKE things! Drawing, colouring, building! You see beauty everywhere!",p:"Your child is CREATIVE. Art classes, drawing books, and crafts will make them shine. Look for art clubs at school or community centres.",s:"art classes for kids near me Pretoria"},
+music:{e:"🎵",n:"MUSIC STAR!",t:"You love MUSIC! Singing, dancing, rhythm! You make people happy with sound!",p:"Your child is MUSICAL. Choir, music lessons, or dance classes will grow this gift. Ask school about choir / music.",s:"music lessons for kids near me Pretoria"},
+chess:{e:"♟️",n:"CHESS & THINKING STAR!",t:"You love PUZZLES! You think deep! You solve hard problems! Future champion thinker!",p:"Your child is a THINKER. Chess club and coding / puzzles will grow this gift fast. Chess is FREE at many schools.",s:"chess club for kids near me Pretoria"},
+sport:{e:"⚽",n:"SPORT STAR!",t:"You love to MOVE! Running, ball, winning! Strong, fast, brave!",p:"Your child is SPORTY. Soccer, athletics, netball will grow discipline + health. Join school sport this term.",s:"sports clubs for kids near me Pretoria"}};
+const g=G[gift];document.getElementById("emoji").innerText=g.e;document.getElementById("giftName").innerText=g.n;document.getElementById("giftText").innerText=g.t;document.getElementById("kidMsg").innerText="Well done, "+name+"! You finished! You are a STAR! 🌟";document.getElementById("parentText").innerText=g.p;document.getElementById("searchText").innerText=g.s;
+function shareWA(){const txt="🎁 "+name+" played Gift Finder! Gift: "+g.n+" Play FREE: https://giftsfinder.co.za/";window.open("https://wa.me/?text="+encodeURIComponent(txt));}
+</script></body></html>
