@@ -1,11 +1,64 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gift Finder</title><link rel="stylesheet" href="css/style.css"></head>
-<body><div class="box center">
-<div style="font-size:60px">🌟🎁🌟</div><h1>GIFT FINDER!</h1>
-<p><b>What gift did God give YOU?</b><br>Play 5 mins. Find it. Grow it.</p>
-<button class="big" onclick="location.href='play.html?age=young'">👶 PLAY 4-7 YEARS</button>
-<button class="big green" onclick="location.href='play.html?age=older'">🧒 PLAY 8-12 YEARS</button>
-<button class="yellow" onclick="location.href='chess.html'">♟️ CHESS PUZZLES ONLY</button>
-<nav><a href="parents.html">Parents</a> | <a href="schools.html">Schools</a> | <a href="clubs.html">Clubs</a></nav>
-<p class="small">Proverbs 18:16 - A gift makes room for you.<br>Made in SA, for SA kids.</p>
-</div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GiftsFinder - Find Gifts in South Africa!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="box center">
+
+<img src="fpic1.jpg" style="width:240px;border-radius:20px">
+<img src="fpic2.jpg" style="width:100%;border-radius:20px;margin-top:14px">
+
+<h1>🎁 GiftsFinder 🇿🇦</h1>
+<p><b>Find gifts. Solve puzzles. WIN in South Africa!</b></p>
+<p>⭐ Fun for kids 5 to 13 ⭐</p>
+
+<div class="card">
+<p class="emoji">🧩</p>
+<h2>What is your name, Superstar?</h2>
+<input id="kidName" placeholder="Type your name here">
+<select id="kidAge">
+<option value="">How old are you?</option>
+<option>5</option><option>6</option><option>7</option>
+<option>8</option><option>9</option><option>10</option>
+<option>11</option><option>12</option><option>13</option>
+</select>
+</div>
+
+<img src="fpic4.jpg" style="width:180px;border-radius:20px">
+
+<button class="big green" onclick="startGame()">▶ START PLAYING</button>
+<button class="yellow" onclick="go('chess.html')">♟️ PLAY CHESS</button>
+<button onclick="go('play.html')">🎮 PLAY WITHOUT NAME</button>
+
+<div class="card">
+<h2>🎮 How To Play</h2>
+<p>1️⃣ Type your name<br>
+2️⃣ Press START<br>
+3️⃣ Find the hidden gift 🎁<br>
+4️⃣ WIN and celebrate! 🏆</p>
+</div>
+
+<p class="small">Made with ❤️ in Pretoria, South Africa<br>
+Safe for kids. No chat. No strangers.</p>
+<p><a href="play.html">Play Game</a> | <a href="chess.html">Chess</a></p>
+
+</div>
+<script src="js/app.js"></script>
+<script>
+function go(page){window.location.href=page}
+function startGame(){
+var n=document.getElementById('kidName').value;
+var a=document.getElementById('kidAge').value;
+if(!n){alert('Please type your name, superstar!');return}
+localStorage.setItem('kidName',n);
+localStorage.setItem('kidAge',a);
+alert('Hello '+n+'! Lets find gifts! 🎁');
+window.location.href='play.html';
+}
+</script>
+</body>
+</html>
