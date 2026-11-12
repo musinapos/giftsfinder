@@ -2,63 +2,126 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GiftsFinder - Find Gifts in South Africa!</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GiftsFinder - Help Kids Discover Who They Are</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#7b2ff7,#00d4ff,#00ff88);color:#fff;text-align:center;min-height:100vh}
+header{padding:25px 15px;background:rgba(0,0,0,.25)}
+h1{font-size:42px;margin:5px;text-shadow:0 0 20px gold,0 0 40px #fff}
+.tag{font-size:20px;font-weight:bold;background:#ffcc00;color:#000;display:inline-block;padding:10px 18px;border-radius:30px;box-shadow:0 0 25px gold}
+.hero{padding:20px 15px}
+.hero h2{font-size:28px;text-shadow:0 0 15px #fff}
+.hero p{font-size:18px;max-width:650px;margin:auto;line-height:1.6}
+.badges span{display:inline-block;background:#fff;color:#111;padding:8px 14px;border-radius:20px;margin:5px;font-weight:bold;box-shadow:0 0 15px #fff}
+.games{padding:10px}
+.card{background:#fff;color:#111;max-width:520px;margin:18px auto;padding:20px;border-radius:25px;box-shadow:0 0 35px gold,0 10px 30px rgba(0,0,0,.4)}
+.card h3{font-size:26px;margin:5px}
+.card p{font-size:17px}
+.btn{display:block;background:linear-gradient(90deg,#ff00cc,#ffcc00);color:#fff;text-decoration:none;padding:18px;border-radius:15px;font-size:24px;font-weight:bold;box-shadow:0 0 25px #ff00cc;margin-top:12px;text-shadow:0 0 10px #000}
+canvas{background:#001133;border:4px solid gold;border-radius:20px;max-width:95%;box-shadow:0 0 35px cyan,0 0 50px gold;touch-action:none}
+#score{font-size:24px;font-weight:bold;color:#ffcc00}
+#playBtn{padding:16px 28px;font-size:22px;font-weight:bold;border:0;border-radius:30px;background:#00ff88;box-shadow:0 0 30px #00ff88;cursor:pointer;margin:10px}
+footer{padding:25px;background:#000;color:#fff;font-size:16px}
+footer b{color:gold}
+</style>
 </head>
 <body>
-<div class="box center">
+<header>
+<div style="font-size:50px">🎁✨🌟</div>
+<h1>GIFTSFINDER</h1>
+<div class="tag">HELP KIDS DISCOVER WHO THEY ARE AT AN EARLY AGE</div>
+</header>
 
-<img src="fpic1.jpg" style="width:240px;border-radius:20px">
-<img src="fpic2.jpg" style="width:100%;border-radius:20px;margin-top:14px">
+<div class="hero">
+<h2>🌈 Every Child Has A Gift! Let's Find It! 🌈</h2>
+<p>Fun, bright and educational games for kids. Play, learn, shine and discover your special talent today!</p>
+<div class="badges"><span>🎨 Creative</span><span>🧠 Smart</span><span>♟️ Thinker</span><span>🫧 Fast</span><span>⭐ Star</span></div>
+</div>
 
-<h1>🎁 GiftsFinder 🇿🇦</h1>
-<p><b>Find gifts. Solve puzzles. WIN in South Africa!</b></p>
-<p>⭐ Fun for kids 5 to 13 ⭐</p>
+<div class="games">
 
 <div class="card">
-<p class="emoji">🧩</p>
-<h2>What is your name, Superstar?</h2>
-<input id="kidName" placeholder="Type your name here">
-<select id="kidAge">
-<option value="">How old are you?</option>
-<option>5</option><option>6</option><option>7</option>
-<option>8</option><option>9</option><option>10</option>
-<option>11</option><option>12</option><option>13</option>
-</select>
+<h3>🫧 BUBBLE SHOOTER - STAR GAME 🫧</h3>
+<p>✨ GLOWING BUBBLES! Match 3 colours and POP! ✨</p>
+<div id="score">⭐ SCORE: 0 ⭐</div>
+<button id="playBtn" onclick="startGame()">▶️ TAP TO PLAY NOW ▶️</button><br>
+<canvas id="c" width="360" height="480"></canvas>
+<p>👆 <b>TAP THE TOP TO AIM & SHOOT!</b><br>Match 3 same glowing colours = BIG POP! 💥</p>
 </div>
-
-<img src="fpic4.jpg" style="width:180px;border-radius:20px">
-
-<button class="big green" onclick="startGame()">▶ START PLAYING</button>
-<button class="yellow" onclick="go('chess.html')">♟️ PLAY CHESS</button>
-<button onclick="go('play.html')">🎮 PLAY WITHOUT NAME</button>
 
 <div class="card">
-<h2>🎮 How To Play</h2>
-<p>1️⃣ Type your name<br>
-2️⃣ Press START<br>
-3️⃣ Find the hidden gift 🎁<br>
-4️⃣ WIN and celebrate! 🏆</p>
+<h3>♟️ CHESS GAME ♟️</h3>
+<p>Become a smart thinker! Play chess and train your brain like a champion!</p>
+<a class="btn" href="chess.html">♟️ PLAY CHESS NOW ♟️</a>
 </div>
 
-<p class="small">Made with ❤️ in Pretoria, South Africa<br>
-Safe for kids. No chat. No strangers.</p>
-<p><a href="play.html">Play Game</a> | <a href="chess.html">Chess</a></p>
+<div class="card">
+<h3>🎁 WHY GIFTSFINDER?</h3>
+<p>✅ Fun for kids<br>✅ Helps teachers & parents see talents early<br>✅ Bright, safe & easy to play on phone<br>✅ Made for schools in South Africa 🇿🇦</p>
+<a class="btn" href="bubble.html">🫧 OPEN BUBBLE FULL SCREEN 🫧</a>
+</div>
 
 </div>
-<script src="js/app.js"></script>
+
+<footer>
+<b>GIFTSFINDER</b><br>
+Made with ❤️ for our kids, our schools, our future.<br>
+© 2026 GiftsFinder | Pretoria, South Africa 🇿🇦
+</footer>
+
 <script>
-function go(page){window.location.href=page}
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+const colors=['#ff004c','#00ff88','#ffe600','#00d4ff','#ff00ff','#ff8800'];
+let bubbles=[],ball=null,score=0,playing=false,angle=-Math.PI/2;
+function nb(x,y){return{x:x,y:y,r:19,c:colors[Math.floor(Math.random()*colors.length)]}}
 function startGame(){
-var n=document.getElementById('kidName').value;
-var a=document.getElementById('kidAge').value;
-if(!n){alert('Please type your name, superstar!');return}
-localStorage.setItem('kidName',n);
-localStorage.setItem('kidAge',a);
-alert('Hello '+n+'! Lets find gifts! 🎁');
-window.location.href='play.html';
+playing=true;score=0;bubbles=[];
+for(let r=0;r<4;r++)for(let i=0;i<9;i++){let b=nb(28+i*36+(r%2?18:0),28+r*33);bubbles.push(b)}
+ball=nb(180,450);
+document.getElementById('playBtn').innerText='🔥 PLAYING! KEEP SHOOTING! 🔥';
+draw();
 }
+function drawBubble(b){
+let g=ctx.createRadialGradient(b.x-6,b.y-6,3,b.x,b.y,20);
+g.addColorStop(0,'#ffffff');g.addColorStop(.3,b.c);g.addColorStop(1,b.c);
+ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle=g;ctx.fill();
+ctx.shadowBlur=18;ctx.shadowColor=b.c;ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
+}
+function draw(){
+ctx.clearRect(0,0,360,480);
+ctx.fillStyle='#001133';ctx.fillRect(0,0,360,480);
+ctx.fillStyle='rgba(255,255,255,.15)';
+for(let i=0;i<20;i++){ctx.beginPath();ctx.arc((i*67)%360,(i*43)%480,2,0,7);ctx.fill()}
+bubbles.forEach(drawBubble);
+if(ball)drawBubble(ball);
+if(ball){ctx.beginPath();ctx.moveTo(180,450);ctx.lineTo(180+Math.cos(angle)*80,450+Math.sin(angle)*80);ctx.strokeStyle='gold';ctx.lineWidth=4;ctx.stroke()}
+document.getElementById('score').innerText='⭐ SCORE: '+score+' ⭐';
+}
+function shoot(mx,my){
+if(!playing||!ball)return;
+angle=Math.atan2(my-450,mx-180);
+let bx=180,by=450,cur=ball;ball=null;
+let iv=setInterval(()=>{
+bx+=Math.cos(angle)*11;by+=Math.sin(angle)*11;
+if(bx<20||bx>340)angle=Math.PI-angle;
+let hit=bubbles.find(b=>Math.hypot(b.x-bx,b.y-by)<36);
+if(hit||by<28){
+clearInterval(iv);
+let n=nb(Math.max(20,Math.min(340,bx)),Math.max(26,by));n.c=cur.c;bubbles.push(n);
+let same=bubbles.filter(b=>b.c===n.c&&Math.hypot(b.x-n.x,b.y-n.y)<75);
+if(same.length>=2){same.forEach(b=>b.dead=true);n.dead=true;score+=same.length*20+20}
+bubbles=bubbles.filter(b=>!b.dead);
+ball=nb(180,450);draw();
+}
+draw();
+if(ball===null){}else{let t=nb(bx,by);t.c=cur.c;drawBubble(t)}
+},30);
+}
+cv.addEventListener('click',e=>{const r=cv.getBoundingClientRect();shoot((e.clientX-r.left)*(360/r.width),(e.clientY-r.top)*(480/r.height))});
+cv.addEventListener('touchstart',e=>{const r=cv.getBoundingClientRect();let t=e.touches[0];shoot((t.clientX-r.left)*(360/r.width),(t.clientY-r.top)*(480/r.height))});
+for(let r=0;r<4;r++)for(let i=0;i<9;i++)bubbles.push(nb(28+i*36+(r%2?18:0),28+r*33));
+ball=nb(180,450);draw();
 </script>
 </body>
 </html>
