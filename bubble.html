@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bubble Shooter - GiftsFinder</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+canvas{background:#87CEEB;border:4px solid #FFD93D;border-radius:20px;max-width:100%}
+</style>
+</head>
+<body>
+<div class="box center">
+<h1>🫧 BUBBLE SHOOTER!</h1>
+<p><b>Hello <span id="showName">Superstar</span>!</b></p>
+<p>⭐ Score: <span id="score">0</span> | 🎯 Bubbles Left: <span id="left">20</span></p>
+<p>Move finger LEFT / RIGHT to aim!<br>Tap SHOOT to pop bubbles!</p>
+<canvas id="game" width="340" height="420"></canvas>
+<br>
+<button class="big green" onclick="shoot()">🔫 SHOOT BUBBLE!</button>
+<button class="yellow" onclick="newGame()">🔁 NEW GAME</button>
+<button onclick="window.location.href='index.html'">🏠 HOME</button>
+<p id="msg"><b>Pop them all! 🎉</b></p>
+</div>
+<script>
+var cv=document.getElementById('game');
+var ctx=cv.getContext('2d');
+var score=0,leftB=20,aimX=170,over=false;
+var bubbles=[],shots=[];
+var colors=['#FF4757','#FFA502','#2ED573','#1E90FF','#ECCC68','#FF6B81'];
+document.getElementById('showName').innerText=localStorage.getItem('kidName')||'Superstar';
+function makeBubbles(){
+bubbles=[];
+for(var i=0;i<8;i++){
+bubbles.push({x:30+Math.random()*280,y:30+Math.random()*120,r:22+Math.random()*10,c:colors[i%colors.length],dx:(Math.random()-0.5)*2});
+}
+}
+makeBubbles();
+cv.addEventListener('touchmove',function(e){aimX=e.touches[0].clientX-cv.getBoundingClientRect().left;e.preventDefault()},{passive:false});
+cv.addEventListener('mousemove',function(e){aimX=e.clientX-cv.getBoundingClientRect().left});
+function popSound(){
+try{
+var c=new (window.AudioContext||window.webkitAudioContext)();
+var o=c.createOscillator();var g=c.createGain();
+o.connect(g);g.connect(c.destination);
+o.frequency.value=900;o.type='sine';g.gain.value=0.2;
+o.start();o.stop(c.currentTime+0.15);
+}catch(e){}
+}
+function shoot(){
+if(over||leftB<=0)return;
+leftB--;document.getElementById('left').innerText=leftB;
+shots.push({x:aimX,y:390,r:12,c:colors[Math.floor(Math.random()*colors.length)]});
+popSound();
+if(leftB<=0&&bubbles.length>0){document.getElementById('msg').innerText='😢 Out of bubbles! Try again!';}
+}
+function newGame(){
+score=0;leftB=20;over=false;
+document.getElementById('score').innerText=score;
+document.getElementById('left').innerText=leftB;
+document.getElementById('msg').innerText='Pop them all! 🎉';
+makeBubbles();shots=[];
+}
+function draw(){
+ctx.clearRect(0,0,340,420);
+bubbles.forEach(function(b){
+b.x+=b.dx;if(b.x<25||b.x>315)b.dx*=-1;
+ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.c;ctx.fill();
+ctx.beginPath();ctx.arc(b.x-7,b.y-7,6,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fill();
+});
+ctx.beginPath();ctx.arc(aimX,390,16,0,Math.PI*2);ctx.fillStyle='#FF4757';ctx.fill();
+ctx.fillStyle='#fff';ctx.font='bold 20px Arial';ctx.textAlign='center';ctx.fillText('🎯',aimX,397);
+shots.forEach(function(s){
+s.y-=8;
+ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.c;ctx.fill();
+});
+for(var i=shots.length-1;i>=0;i--){
+for(var j=bubbles.length-1;j>=0;j--){
+var d=Math.hypot(shots[i].x-bubbles[j].x,shots[i].y-bubbles[j].y);
+if(d<bubbles[j].r+shots[i].r){
+bubbles.splice(j,1);shots.splice(i,1);
+score+=10;document.getElementById('score').innerText=score;
+popSound();
+document.getElementById('msg').innerText='💥 POP! +10! Good shot!';
+break;
+}
+}
+if(shots[i]&&shots[i].y<0)shots.splice(i,1);
+}
+if(bubbles.length===0&&!over){
+over=true;
+document.getElementById('msg').innerText='🏆 YOU POPPED THEM ALL! YOU WIN! 🏆';
+}
+requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
