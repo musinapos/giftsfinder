@@ -1,6 +1,124 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Play - Gift Finder</title><link rel="stylesheet" href="css/style.css"></head>
-<body><div class="box center">
-<div id="setup"><h1>🌟 Let's Play!</h1><input id="kidName" placeholder="Type your name..."><button class="big" onclick="startQuiz()">▶ START GAME</button><p><a href="index.html">← Back Home</a></p></div>
-<div id="quiz" style="display:none"><p id="progress"></p><div class="bar"><div class="fill" id="barFill"></div></div><h2 id="qText"></h2><div id="opts"></div></div>
-</div><script src="js/game.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play - GiftsFinder</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.gift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.gift-btn{font-size:50px;padding:20px 0;background:#fff;border:4px solid #FFD93D;border-radius:20px;cursor:pointer}
+#winBox{display:none}
+</style>
+</head>
+<body>
+<div class="box center">
+
+<img src="fpic4.jpg" style="width:160px;border-radius:20px">
+<h1>🎁 Find The Gift!</h1>
+<p><b>Hello <span id="showName">Superstar</span>! 🇿🇦</b></p>
+<p>⭐ Score: <span id="score">0</span> | ❤️ Tries Left: <span id="tries">5</span></p>
+<p>Tap a box! The gift is hiding in ONE box!</p>
+
+<div class="gift-grid">
+<button class="gift-btn" onclick="checkGift(0,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(1,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(2,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(3,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(4,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(5,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(6,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(7,this)">❓</button>
+<button class="gift-btn" onclick="checkGift(8,this)">❓</button>
+</div>
+
+<p id="message"><b>Good luck! 🍀</b></p>
+
+<div id="winBox" class="card">
+<img src="fpic3.jpg" style="width:100%;border-radius:20px">
+<h2>🏆 YOU DID IT!</h2>
+<p>You found the gift, <span class="winnerName">Superstar</span>!</p>
+<p>⭐⭐⭐ YOU ARE A STAR! ⭐⭐⭐</p>
+<button class="big green" onclick="playAgain()">🔁 PLAY AGAIN</button>
+</div>
+
+<div id="loseBox" style="display:none" class="card">
+<h2>😢 No tries left!</h2>
+<p>Try again, superstar! You can do it!</p>
+<button class="big green" onclick="playAgain()">🔁 TRY AGAIN</button>
+</div>
+
+<button class="yellow" onclick="goHome()">🏠 HOME</button>
+<button onclick="goChess()">♟️ PLAY CHESS</button>
+<p class="small">Made with ❤️ in Pretoria, South Africa</p>
+
+</div>
+<script src="js/app.js"></script>
+<script>
+var giftSpot=Math.floor(Math.random()*9);
+var score=0;
+var tries=5;
+var gameOver=false;
+document.getElementById('showName').innerText=localStorage.getItem('kidName')||'Superstar';
+function goHome(){window.location.href='index.html'}
+function goChess(){window.location.href='chess.html'}
+function playWin(){
+try{
+var c=new (window.AudioContext||window.webkitAudioContext)();
+[523,659,784,1047].forEach(function(f,i){
+var o=c.createOscillator();var g=c.createGain();
+o.connect(g);g.connect(c.destination);
+o.frequency.value=f;o.type='sine';g.gain.value=0.2;
+o.start(c.currentTime+i*0.15);o.stop(c.currentTime+i*0.15+0.25);
+});
+}catch(e){}
+}
+function playClick(){
+try{
+var c=new (window.AudioContext||window.webkitAudioContext)();
+var o=c.createOscillator();var g=c.createGain();
+o.connect(g);g.connect(c.destination);
+o.frequency.value=800;o.type='sine';g.gain.value=0.2;
+o.start();o.stop(c.currentTime+0.1);
+}catch(e){}
+}
+function checkGift(n,btn){
+if(gameOver)return;
+playClick();
+if(n===giftSpot){
+btn.innerText='🎁';
+score=score+10;
+document.getElementById('score').innerText=score;
+document.getElementById('message').innerText='🎉 YOU FOUND IT! 🎉';
+document.getElementById('winBox').style.display='block';
+document.querySelector('.winnerName').innerText=localStorage.getItem('kidName')||'Superstar';
+playWin();
+gameOver=true;
+}else{
+btn.innerText='❌';
+btn.disabled=true;
+tries=tries-1;
+document.getElementById('tries').innerText=tries;
+if(tries<=0){
+document.getElementById('message').innerText='Oh no! The gift was in another box!';
+document.getElementById('loseBox').style.display='block';
+gameOver=true;
+}else{
+document.getElementById('message').innerText='Not here! Try again! '+tries+' tries left!';
+}
+}
+}
+function playAgain(){
+giftSpot=Math.floor(Math.random()*9);
+tries=5;gameOver=false;
+document.getElementById('tries').innerText=tries;
+document.getElementById('message').innerText='New game! Good luck! 🍀';
+document.getElementById('winBox').style.display='none';
+document.getElementById('loseBox').style.display='none';
+var btns=document.querySelectorAll('.gift-btn');
+btns.forEach(function(b){b.innerText='❓';b.disabled=false});
+playClick();
+}
+</script>
+</body>
+</html>
