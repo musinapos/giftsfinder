@@ -1,98 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bubble Shooter - GiftsFinder</title>
-<link rel="stylesheet" href="css/style.css">
 <style>
-canvas{background:#87CEEB;border:4px solid #FFD93D;border-radius:20px;max-width:100%}
+body{margin:0;background:#111;text-align:center;font-family:Arial;color:#fff}
+h1{color:gold;margin:10px}
+#door{padding:15px 30px;font-size:22px;background:gold;border:0;border-radius:12px;font-weight:bold;margin:10px}
+#back{display:inline-block;padding:10px 20px;background:#fff;color:#000;border-radius:10px;text-decoration:none;font-weight:bold;margin:5px}
+canvas{background:#222;border:3px solid gold;border-radius:12px;max-width:95%}
+#score{font-size:20px;color:gold}
 </style>
 </head>
 <body>
-<div class="box center">
-<h1>🫧 BUBBLE SHOOTER!</h1>
-<p><b>Hello <span id="showName">Superstar</span>!</b></p>
-<p>⭐ Score: <span id="score">0</span> | 🎯 Bubbles Left: <span id="left">20</span></p>
-<p>Move finger LEFT / RIGHT to aim!<br>Tap SHOOT to pop bubbles!</p>
-<canvas id="game" width="340" height="420"></canvas>
-<br>
-<button class="big green" onclick="shoot()">🔫 SHOOT BUBBLE!</button>
-<button class="yellow" onclick="newGame()">🔁 NEW GAME</button>
-<button onclick="window.location.href='index.html'">🏠 HOME</button>
-<p id="msg"><b>Pop them all! 🎉</b></p>
-</div>
+<h1>🎁 GiftsFinder 🎁</h1>
+<a id="back" href="index.html">🏠 HOME - Back To House</a><br>
+<div id="score">Score: 0</div>
+<button id="door" onclick="startGame()">🚪 TAP HERE - ENTER BUBBLE ROOM - PLAY ▶️</button><br>
+<canvas id="c" width="360" height="500"></canvas>
+<p>👆 TAP TOP to AIM & SHOOT 👆<br>Match 3 same colours = POP 💥</p>
 <script>
-var cv=document.getElementById('game');
-var ctx=cv.getContext('2d');
-var score=0,leftB=20,aimX=170,over=false;
-var bubbles=[],shots=[];
-var colors=['#FF4757','#FFA502','#2ED573','#1E90FF','#ECCC68','#FF6B81'];
-document.getElementById('showName').innerText=localStorage.getItem('kidName')||'Superstar';
-function makeBubbles(){
-bubbles=[];
-for(var i=0;i<8;i++){
-bubbles.push({x:30+Math.random()*280,y:30+Math.random()*120,r:22+Math.random()*10,c:colors[i%colors.length],dx:(Math.random()-0.5)*2});
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+const colors=['red','lime','yellow','cyan','magenta','orange'];
+let bubbles=[],ball=null,score=0,playing=false,angle=-Math.PI/2;
+function newBubble(x,y){return{x:x,y:y,r:18,c:colors[Math.floor(Math.random()*colors.length)],dead:false}}
+function startGame(){
+playing=true;score=0;bubbles=[];ball=null;
+document.getElementById('door').innerText='🔥 PLAYING - SHOOT! 🔥';
+for(let r=0;r<4;r++)for(let i=0;i<9;i++)bubbles.push(newBubble(27+i*36+(r%2?18:0),27+r*32));
+nextBall();draw();
 }
-}
-makeBubbles();
-cv.addEventListener('touchmove',function(e){aimX=e.touches[0].clientX-cv.getBoundingClientRect().left;e.preventDefault()},{passive:false});
-cv.addEventListener('mousemove',function(e){aimX=e.clientX-cv.getBoundingClientRect().left});
-function popSound(){
-try{
-var c=new (window.AudioContext||window.webkitAudioContext)();
-var o=c.createOscillator();var g=c.createGain();
-o.connect(g);g.connect(c.destination);
-o.frequency.value=900;o.type='sine';g.gain.value=0.2;
-o.start();o.stop(c.currentTime+0.15);
-}catch(e){}
-}
-function shoot(){
-if(over||leftB<=0)return;
-leftB--;document.getElementById('left').innerText=leftB;
-shots.push({x:aimX,y:390,r:12,c:colors[Math.floor(Math.random()*colors.length)]});
-popSound();
-if(leftB<=0&&bubbles.length>0){document.getElementById('msg').innerText='😢 Out of bubbles! Try again!';}
-}
-function newGame(){
-score=0;leftB=20;over=false;
-document.getElementById('score').innerText=score;
-document.getElementById('left').innerText=leftB;
-document.getElementById('msg').innerText='Pop them all! 🎉';
-makeBubbles();shots=[];
-}
+function nextBall(){ball=newBubble(180,470);ball.c=colors[Math.floor(Math.random()*colors.length)];}
 function draw(){
-ctx.clearRect(0,0,340,420);
-bubbles.forEach(function(b){
-b.x+=b.dx;if(b.x<25||b.x>315)b.dx*=-1;
-ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.c;ctx.fill();
-ctx.beginPath();ctx.arc(b.x-7,b.y-7,6,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fill();
+ctx.clearRect(0,0,360,500);
+bubbles.forEach(b=>{if(!b.dead){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle=b.c;ctx.fill();ctx.strokeStyle='#fff';ctx.stroke();}});
+if(ball){ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,7);ctx.fillStyle=ball.c;ctx.fill();ctx.strokeStyle='#fff';ctx.stroke();
+ctx.beginPath();ctx.moveTo(180,470);ctx.lineTo(180+Math.cos(angle)*70,470+Math.sin(angle)*70);ctx.strokeStyle='gold';ctx.lineWidth=3;ctx.stroke();}
+document.getElementById('score').innerText='Score: '+score;
+}
+cv.addEventListener('click',e=>{
+if(!playing)return;
+const rect=cv.getBoundingClientRect();
+const mx=(e.clientX-rect.left)*(360/rect.width),my=(e.clientY-rect.top)*(500/rect.height);
+angle=Math.atan2(my-470,mx-180);
+let bx=180,by=470;
+let iv=setInterval(()=>{
+bx+=Math.cos(angle)*10;by+=Math.sin(angle)*10;
+if(bx<18||bx>342)angle=Math.PI-angle;
+let hit=bubbles.find(b=>!b.dead&&Math.hypot(b.x-bx,b.y-by)<36);
+if(hit||by<30){
+clearInterval(iv);
+let nb=newBubble(Math.max(20,Math.min(340,bx)),Math.max(25,by));nb.c=ball.c;bubbles.push(nb);
+let same=bubbles.filter(b=>!b.dead&&b.c===nb.c&&Math.hypot(b.x-nb.x,b.y-nb.y)<70);
+if(same.length>=2){same.forEach(b=>b.dead=true);nb.dead=true;score+=same.length*10+10;}
+bubbles=bubbles.filter(b=>!b.dead);
+nextBall();
+}
+ball.x=bx;ball.y=by;draw();
+if(by<30||hit){ball=null;draw();nextBall();draw();}
+},30);
 });
-ctx.beginPath();ctx.arc(aimX,390,16,0,Math.PI*2);ctx.fillStyle='#FF4757';ctx.fill();
-ctx.fillStyle='#fff';ctx.font='bold 20px Arial';ctx.textAlign='center';ctx.fillText('🎯',aimX,397);
-shots.forEach(function(s){
-s.y-=8;
-ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.c;ctx.fill();
-});
-for(var i=shots.length-1;i>=0;i--){
-for(var j=bubbles.length-1;j>=0;j--){
-var d=Math.hypot(shots[i].x-bubbles[j].x,shots[i].y-bubbles[j].y);
-if(d<bubbles[j].r+shots[i].r){
-bubbles.splice(j,1);shots.splice(i,1);
-score+=10;document.getElementById('score').innerText=score;
-popSound();
-document.getElementById('msg').innerText='💥 POP! +10! Good shot!';
-break;
-}
-}
-if(shots[i]&&shots[i].y<0)shots.splice(i,1);
-}
-if(bubbles.length===0&&!over){
-over=true;
-document.getElementById('msg').innerText='🏆 YOU POPPED THEM ALL! YOU WIN! 🏆';
-}
-requestAnimationFrame(draw);
-}
 draw();
 </script>
 </body>
